@@ -356,6 +356,7 @@
   }
 
   lastInn();
+  setInterval(() => { if (editId === null) lastInn(); }, 30000);
 </script>
 </body>
 </html>
