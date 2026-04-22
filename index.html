@@ -27,35 +27,35 @@
     }
     #lagNavn:focus { border-bottom: 2px solid #60a5fa; }
     .subtitle { color: #93c5fd; font-size: 0.9rem; margin-top: 6px; }
+    .loading {
+      color: #60a5fa; font-size: 0.9rem; margin: 40px 0;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .spinner {
+      width: 18px; height: 18px; border: 2px solid rgba(96,165,250,0.3);
+      border-top-color: #60a5fa; border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error-msg {
+      color: #f87171; background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 10px; padding: 12px 16px;
+      font-size: 0.85rem; margin: 16px 0; max-width: 700px;
+    }
     .section { width: 100%; max-width: 700px; margin-bottom: 36px; }
-    .section-header {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
-    }
-    .section-title {
-      color: #e2e8f0; font-size: 1.05rem; font-weight: 700;
-      letter-spacing: 0.03em; text-transform: uppercase;
-    }
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .section-title { color: #e2e8f0; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
     .section-line { flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 14px; margin-bottom: 14px;
-    }
-    .card {
-      background: rgba(255,255,255,0.04);
-      border-radius: 16px; padding: 16px 18px; cursor: pointer;
-      transition: background 0.15s;
-    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 14px; }
+    .card { background: rgba(255,255,255,0.04); border-radius: 16px; padding: 16px 18px; cursor: pointer; transition: background 0.15s; }
     .card:hover { background: rgba(255,255,255,0.08); }
     .card.ledig   { border: 1px solid rgba(34,197,94,0.3); }
     .card.utlånt  { border: 1px solid rgba(245,158,11,0.3); }
     .card.mangler { border: 1px solid rgba(239,68,68,0.3); }
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
     .card-name { font-weight: 800; font-size: 1rem; }
-    .badge {
-      display: inline-block; padding: 2px 10px; border-radius: 999px;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em;
-    }
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
     .badge.ledig   { color: #22c55e; background: #f0fdf4; border: 1px solid #bbf7d0; }
     .badge.utlånt  { color: #f59e0b; background: #fffbeb; border: 1px solid #fde68a; }
     .badge.mangler { color: #ef4444; background: #fef2f2; border: 1px solid #fecaca; }
@@ -63,71 +63,29 @@
     .card-detail span { color: #94a3b8; }
     .card-detail.hos span { color: #bfdbfe; }
     .card-detail.merknad { font-style: italic; }
-
-    .edit-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(96,165,250,0.5);
-      border-radius: 16px; padding: 18px 20px;
-    }
+    .edit-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(96,165,250,0.5); border-radius: 16px; padding: 18px 20px; }
     .edit-title { color: #bfdbfe; font-weight: 700; margin-bottom: 12px; }
     .edit-label { color: #93c5fd; font-size: 0.78rem; display: block; margin-bottom: 3px; }
-    .edit-input {
-      width: 100%; background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 8px; color: #f0f9ff; padding: 6px 10px;
-      font-size: 0.9rem; margin-bottom: 10px; outline: none;
-      font-family: inherit;
-    }
+    .edit-input { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #f0f9ff; padding: 6px 10px; font-size: 0.9rem; margin-bottom: 10px; outline: none; font-family: inherit; }
     .edit-input::placeholder { color: #475569; }
     .status-buttons { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
-    .status-btn {
-      padding: 4px 12px; border-radius: 999px; font-size: 0.75rem;
-      font-weight: 600; cursor: pointer; border: 1.5px solid rgba(255,255,255,0.15);
-      background: transparent; color: #94a3b8; font-family: inherit;
-      transition: all 0.1s;
-    }
+    .status-btn { padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: 1.5px solid rgba(255,255,255,0.15); background: transparent; color: #94a3b8; font-family: inherit; }
     .status-btn.active.ledig   { border-color: #22c55e; background: #f0fdf4; color: #22c55e; }
     .status-btn.active.utlånt  { border-color: #f59e0b; background: #fffbeb; color: #f59e0b; }
     .status-btn.active.mangler { border-color: #ef4444; background: #fef2f2; color: #ef4444; }
     .edit-actions { display: flex; gap: 8px; }
-    .btn-save {
-      flex: 1; background: #3b82f6; color: #fff; border: none;
-      border-radius: 8px; padding: 7px 0; font-weight: 700;
-      cursor: pointer; font-size: 0.9rem; font-family: inherit;
-    }
-    .btn-cancel {
-      flex: 1; background: rgba(255,255,255,0.08); color: #94a3b8; border: none;
-      border-radius: 8px; padding: 7px 0; font-weight: 600;
-      cursor: pointer; font-size: 0.9rem; font-family: inherit;
-    }
-    .btn-add {
-      background: rgba(59,130,246,0.12); border: 1px dashed rgba(96,165,250,0.35);
-      color: #60a5fa; border-radius: 10px; padding: 8px 20px;
-      font-weight: 600; cursor: pointer; font-size: 0.85rem; font-family: inherit;
-    }
+    .btn-save { flex: 1; background: #3b82f6; color: #fff; border: none; border-radius: 8px; padding: 7px 0; font-weight: 700; cursor: pointer; font-size: 0.9rem; font-family: inherit; }
+    .btn-save:disabled { background: #1e3a5f; color: #475569; cursor: not-allowed; }
+    .btn-cancel { flex: 1; background: rgba(255,255,255,0.08); color: #94a3b8; border: none; border-radius: 8px; padding: 7px 0; font-weight: 600; cursor: pointer; font-size: 0.9rem; font-family: inherit; }
+    .btn-add { background: rgba(59,130,246,0.12); border: 1px dashed rgba(96,165,250,0.35); color: #60a5fa; border-radius: 10px; padding: 8px 20px; font-weight: 600; cursor: pointer; font-size: 0.85rem; font-family: inherit; }
     .spond-section { width: 100%; max-width: 700px; padding-bottom: 40px; }
-    .btn-spond {
-      width: 100%; background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12); color: #cbd5e1;
-      border-radius: 10px; padding: 10px 20px; font-weight: 600;
-      cursor: pointer; font-size: 0.9rem; margin-bottom: 12px; font-family: inherit;
-    }
-    .spond-box {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px; padding: 20px; display: none;
-    }
+    .btn-spond { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #cbd5e1; border-radius: 10px; padding: 10px 20px; font-weight: 600; cursor: pointer; font-size: 0.9rem; margin-bottom: 12px; font-family: inherit; }
+    .spond-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: none; }
     .spond-box.open { display: block; }
-    .spond-pre {
-      color: #cbd5e1; font-family: monospace; font-size: 0.85rem;
-      white-space: pre-wrap; line-height: 1.7;
-    }
-    .btn-copy {
-      margin-top: 14px; background: #3b82f6; color: #fff; border: none;
-      border-radius: 8px; padding: 8px 18px; font-weight: 700;
-      cursor: pointer; font-size: 0.85rem; font-family: inherit;
-      transition: background 0.2s;
-    }
+    .spond-pre { color: #cbd5e1; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; line-height: 1.7; }
+    .btn-copy { margin-top: 14px; background: #3b82f6; color: #fff; border: none; border-radius: 8px; padding: 8px 18px; font-weight: 700; cursor: pointer; font-size: 0.85rem; font-family: inherit; transition: background 0.2s; }
     .btn-copy.copied { background: #22c55e; }
+    .saving-indicator { color: #60a5fa; font-size: 0.75rem; margin-top: 4px; min-height: 16px; }
   </style>
 </head>
 <body>
@@ -138,73 +96,126 @@
   <p class="subtitle">Keeperutstyr — trykk på et element for å oppdatere</p>
 </div>
 
-<div class="section" id="sectionDrakter">
-  <div class="section-header">
-    <span>👕</span>
-    <span class="section-title">Drakter</span>
-    <div class="section-line"></div>
-  </div>
-  <div class="grid" id="gridDrakter"></div>
-  <button class="btn-add" onclick="leggTil('drakter')">+ Legg til drakt</button>
-</div>
+<div id="loadingMsg" class="loading"><div class="spinner"></div> Laster utstyr...</div>
+<div id="errorMsg" class="error-msg" style="display:none"></div>
 
-<div class="section" id="sectionHansker">
-  <div class="section-header">
-    <span>🧤</span>
-    <span class="section-title">Hansker</span>
-    <div class="section-line"></div>
+<div id="appContent" style="display:none; width:100%; display:none; flex-direction:column; align-items:center;">
+  <div class="section">
+    <div class="section-header">
+      <span>👕</span>
+      <span class="section-title">Drakter</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="grid" id="gridDrakter"></div>
+    <button class="btn-add" onclick="leggTil('drakt')">+ Legg til drakt</button>
   </div>
-  <div class="grid" id="gridHansker"></div>
-  <button class="btn-add" onclick="leggTil('hansker')">+ Legg til hansker</button>
-</div>
 
-<div class="spond-section">
-  <button class="btn-spond" onclick="toggleSpond()">▼ Vis Spond-melding</button>
-  <div class="spond-box" id="spondBox">
-    <pre class="spond-pre" id="spondTekst"></pre>
-    <button class="btn-copy" id="btnKopier" onclick="kopier()">📋 Kopier til utklippstavle</button>
+  <div class="section">
+    <div class="section-header">
+      <span>🧤</span>
+      <span class="section-title">Hansker</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="grid" id="gridHansker"></div>
+    <button class="btn-add" onclick="leggTil('hansker')">+ Legg til hansker</button>
+  </div>
+
+  <div class="spond-section">
+    <button class="btn-spond" onclick="toggleSpond()">▼ Vis Spond-melding</button>
+    <div class="spond-box" id="spondBox">
+      <pre class="spond-pre" id="spondTekst"></pre>
+      <button class="btn-copy" id="btnKopier" onclick="kopier()">📋 Kopier til utklippstavle</button>
+    </div>
   </div>
 </div>
 
 <script>
-  const data = {
-    drakter: [
-      { id: "d1", nr: "1", størrelse: "S", hvem: "", merknad: "", status: "ledig" },
-      { id: "d2", nr: "2", størrelse: "M", hvem: "", merknad: "", status: "ledig" },
-      { id: "d3", nr: "3", størrelse: "L", hvem: "", merknad: "", status: "ledig" },
-      { id: "d4", nr: "4", størrelse: "XL", hvem: "", merknad: "", status: "ledig" },
-    ],
-    hansker: [
-      { id: "h1", nr: "1", størrelse: "6", hvem: "", merknad: "", status: "ledig" },
-      { id: "h2", nr: "2", størrelse: "7", hvem: "", merknad: "", status: "ledig" },
-      { id: "h3", nr: "3", størrelse: "8", hvem: "", merknad: "", status: "ledig" },
-    ],
+  const SUPABASE_URL = "https://riqepvtgsadowwieyrpp.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpcWVwdnRnc2Fkb3d3aWV5cnBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1NTI0MDMsImV4cCI6MjA2MTEyODQwM30.tbLTqNJPKW9UaHSBpUWUxJIb7zg5Xh7aEQcQRGCF5_k";
+
+  const headers = {
+    "Content-Type": "application/json",
+    "apikey": SUPABASE_KEY,
+    "Authorization": "Bearer " + SUPABASE_KEY,
+    "Prefer": "return=representation"
   };
 
+  let data = { drakt: [], hansker: [] };
   let editId = null;
   let editType = null;
   let draft = {};
   let spondOpen = false;
 
   const statusLabels = { ledig: "Ledig", "utlånt": "Utlånt", mangler: "Mangler / ukjent" };
-  const prefiks = { drakter: "Drakt", hansker: "Hansker" };
-  const størrelsePlaceholder = { drakter: "S / M / L / XL / 128 osv.", hansker: "5 / 6 / 7 / 8 / 9 osv." };
+  const prefiks = { drakt: "Drakt", hansker: "Hansker" };
+  const størrelsePlaceholder = { drakt: "S / M / L / XL / 128 osv.", hansker: "5 / 6 / 7 / 8 / 9 osv." };
+
+  async function apiFetch(path, options = {}) {
+    const res = await fetch(SUPABASE_URL + "/rest/v1/" + path, { headers, ...options });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(err);
+    }
+    return res.status === 204 ? null : res.json();
+  }
+
+  async function lastInn() {
+    try {
+      const rows = await apiFetch("utstyr?order=type,nr");
+      data.drakt = rows.filter(r => r.type === "drakt");
+      data.hansker = rows.filter(r => r.type === "hansker");
+
+      // seed default data if empty
+      if (rows.length === 0) {
+        await seedData();
+        return lastInn();
+      }
+
+      document.getElementById("loadingMsg").style.display = "none";
+      const app = document.getElementById("appContent");
+      app.style.display = "flex";
+      app.style.flexDirection = "column";
+      app.style.alignItems = "center";
+      render("drakt");
+      render("hansker");
+    } catch (e) {
+      document.getElementById("loadingMsg").style.display = "none";
+      const err = document.getElementById("errorMsg");
+      err.style.display = "block";
+      err.textContent = "Kunne ikke koble til databasen. Sjekk at tabellen 'utstyr' er opprettet i Supabase. Feil: " + e.message;
+    }
+  }
+
+  async function seedData() {
+    const defaults = [
+      { type: "drakt", nr: 1, størrelse: "S", hvem: "", merknad: "", status: "ledig" },
+      { type: "drakt", nr: 2, størrelse: "M", hvem: "", merknad: "", status: "ledig" },
+      { type: "drakt", nr: 3, størrelse: "L", hvem: "", merknad: "", status: "ledig" },
+      { type: "drakt", nr: 4, størrelse: "XL", hvem: "", merknad: "", status: "ledig" },
+      { type: "hansker", nr: 1, størrelse: "6", hvem: "", merknad: "", status: "ledig" },
+      { type: "hansker", nr: 2, størrelse: "7", hvem: "", merknad: "", status: "ledig" },
+      { type: "hansker", nr: 3, størrelse: "8", hvem: "", merknad: "", status: "ledig" },
+    ];
+    await apiFetch("utstyr", { method: "POST", body: JSON.stringify(defaults) });
+  }
 
   function render(type) {
-    const grid = document.getElementById("grid" + capitalize(type));
+    const gridId = type === "drakt" ? "gridDrakter" : "gridHansker";
+    const grid = document.getElementById(gridId);
     grid.innerHTML = "";
     data[type].forEach(k => {
       const div = document.createElement("div");
+      const st = k.status || "ledig";
       if (editId === k.id && editType === type) {
         div.className = "edit-card";
         div.innerHTML = `
           <div class="edit-title">${prefiks[type]} ${k.nr}</div>
           <label class="edit-label">Størrelse</label>
-          <input class="edit-input" id="inp-størrelse" value="${draft.størrelse}" placeholder="${størrelsePlaceholder[type]}" />
+          <input class="edit-input" id="inp-størrelse" value="${draft.størrelse || ""}" placeholder="${størrelsePlaceholder[type]}" />
           <label class="edit-label">Hvem har den?</label>
-          <input class="edit-input" id="inp-hvem" value="${draft.hvem}" placeholder="Navn / ingen" />
+          <input class="edit-input" id="inp-hvem" value="${draft.hvem || ""}" placeholder="Navn / ingen" />
           <label class="edit-label">Merknad</label>
-          <input class="edit-input" id="inp-merknad" value="${draft.merknad}" placeholder="F.eks. «vaske», «mangler»" />
+          <input class="edit-input" id="inp-merknad" value="${draft.merknad || ""}" placeholder="F.eks. «vaske», «mangler»" />
           <label class="edit-label">Status</label>
           <div class="status-buttons">
             <button class="status-btn ${draft.status === 'ledig' ? 'active ledig' : ''}" onclick="setStatus('ledig')">Ledig</button>
@@ -212,19 +223,25 @@
             <button class="status-btn ${draft.status === 'mangler' ? 'active mangler' : ''}" onclick="setStatus('mangler')">Mangler / ukjent</button>
           </div>
           <div class="edit-actions">
-            <button class="btn-save" onclick="lagre('${k.id}', '${type}')">Lagre</button>
+            <button class="btn-save" id="btnLagre" onclick="lagre('${k.id}', '${type}')">Lagre</button>
             <button class="btn-cancel" onclick="avbryt()">Avbryt</button>
           </div>
+          <div class="saving-indicator" id="savingIndicator"></div>
         `;
+        setTimeout(() => {
+          ["størrelse","hvem","merknad"].forEach(f => {
+            const el = document.getElementById("inp-" + f);
+            if (el) el.addEventListener("input", e => { draft[f] = e.target.value; });
+          });
+        }, 0);
       } else {
-        const st = k.status || (k.hvem ? "utlånt" : "ledig");
         div.className = `card ${st}`;
         div.innerHTML = `
           <div class="card-top">
             <span class="card-name">${prefiks[type]} ${k.nr}</span>
             <span class="badge ${st}">${statusLabels[st]}</span>
           </div>
-          <div class="card-detail">Størrelse: <span>${k.størrelse}</span></div>
+          <div class="card-detail">Størrelse: <span>${k.størrelse || "—"}</span></div>
           ${k.hvem ? `<div class="card-detail hos">Hos: <span>${k.hvem}</span></div>` : ""}
           ${k.merknad ? `<div class="card-detail merknad">${k.merknad}</div>` : ""}
         `;
@@ -237,77 +254,89 @@
   function startEdit(k, type) {
     editId = k.id;
     editType = type;
-    draft = { størrelse: k.størrelse, hvem: k.hvem, merknad: k.merknad, status: k.status || (k.hvem ? "utlånt" : "ledig") };
+    draft = { størrelse: k.størrelse || "", hvem: k.hvem || "", merknad: k.merknad || "", status: k.status || "ledig" };
     render(type);
-    // sync inputs live
-    setTimeout(() => {
-      ["størrelse","hvem","merknad"].forEach(f => {
-        const el = document.getElementById("inp-" + f);
-        if (el) el.addEventListener("input", e => { draft[f] = e.target.value; });
-      });
-    }, 0);
   }
 
   function setStatus(s) {
     draft.status = s;
-    render(editType);
-    setTimeout(() => {
-      ["størrelse","hvem","merknad"].forEach(f => {
-        const el = document.getElementById("inp-" + f);
-        if (el) {
-          el.addEventListener("input", e => { draft[f] = e.target.value; });
-        }
-      });
-    }, 0);
+    const type = editType;
+    render(type);
   }
 
-  function lagre(id, type) {
-    // grab latest input values before saving
+  async function lagre(id, type) {
     ["størrelse","hvem","merknad"].forEach(f => {
       const el = document.getElementById("inp-" + f);
       if (el) draft[f] = el.value;
     });
-    const item = data[type].find(k => k.id === id);
-    Object.assign(item, draft);
-    editId = null; editType = null;
-    render(type);
-    oppdaterSpond();
+
+    const btn = document.getElementById("btnLagre");
+    const ind = document.getElementById("savingIndicator");
+    if (btn) btn.disabled = true;
+    if (ind) ind.textContent = "Lagrer...";
+
+    try {
+      const isNew = typeof id === "string" && id.startsWith("ny_");
+      if (isNew) {
+        const maxNr = Math.max(0, ...data[type].map(k => k.nr || 0));
+        const row = await apiFetch("utstyr", {
+          method: "POST",
+          body: JSON.stringify([{ type, nr: maxNr + 1, ...draft }])
+        });
+        data[type] = data[type].filter(k => k.id !== id);
+        if (row && row[0]) data[type].push(row[0]);
+      } else {
+        await apiFetch(`utstyr?id=eq.${id}`, {
+          method: "PATCH",
+          body: JSON.stringify(draft)
+        });
+        data[type] = data[type].map(k => k.id === id ? { ...k, ...draft } : k);
+      }
+      editId = null; editType = null;
+      render(type);
+      oppdaterSpond();
+    } catch (e) {
+      if (ind) ind.textContent = "Feil ved lagring: " + e.message;
+      if (btn) btn.disabled = false;
+    }
   }
 
   function avbryt() {
-    const t = editType;
+    const type = editType;
+    // remove unsaved new items
+    if (typeof editId === "string" && editId.startsWith("ny_")) {
+      data[type] = data[type].filter(k => k.id !== editId);
+    }
     editId = null; editType = null;
-    render(t);
+    render(type);
   }
 
   function leggTil(type) {
-    const nums = data[type].map(k => parseInt(k.nr)).filter(Boolean);
-    const nextNr = String(nums.length ? Math.max(...nums) + 1 : 1);
-    const newId = type[0] + Date.now();
-    const newK = { id: newId, nr: nextNr, størrelse: "", hvem: "", merknad: "", status: "ledig" };
+    const tempId = "ny_" + Date.now();
+    const maxNr = Math.max(0, ...data[type].map(k => k.nr || 0));
+    const newK = { id: tempId, type, nr: maxNr + 1, størrelse: "", hvem: "", merknad: "", status: "ledig" };
     data[type].push(newK);
     startEdit(newK, type);
   }
 
-  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
   function lagLinjer(items, pref) {
     return items.map(k => {
-      const st = k.status || (k.hvem ? "utlånt" : "ledig");
+      const st = k.status || "ledig";
       const emoji = st === "ledig" ? "🟢" : st === "utlånt" ? "🟡" : "🔴";
       const hvemStr = k.hvem ? ` — ${k.hvem}` : "";
       const mStr = k.merknad ? ` (${k.merknad})` : "";
-      return `${emoji} ${pref} ${k.nr} (str. ${k.størrelse})${hvemStr}${mStr} — ${statusLabels[st]}`;
+      return `${emoji} ${pref} ${k.nr} (str. ${k.størrelse || "?"})${hvemStr}${mStr} — ${statusLabels[st]}`;
     }).join("\n");
   }
 
   function getSpondTekst() {
     const lag = document.getElementById("lagNavn").value;
-    return `🧤 Keeperutstyr – ${lag}\n\n👕 Drakter\n${lagLinjer(data.drakter,"Drakt")}\n\n🧤 Hansker\n${lagLinjer(data.hansker,"Hansker")}\n\nKontakt trenerne hvis du har utstyr hjemme eller trenger å låne.`;
+    return `🧤 Keeperutstyr – ${lag}\n\n👕 Drakter\n${lagLinjer(data.drakt,"Drakt")}\n\n🧤 Hansker\n${lagLinjer(data.hansker,"Hansker")}\n\nKontakt trenerne hvis du har utstyr hjemme eller trenger å låne.`;
   }
 
   function oppdaterSpond() {
-    document.getElementById("spondTekst").textContent = getSpondTekst();
+    const el = document.getElementById("spondTekst");
+    if (el) el.textContent = getSpondTekst();
   }
 
   function toggleSpond() {
@@ -326,8 +355,7 @@
     });
   }
 
-  render("drakter");
-  render("hansker");
+  lastInn();
 </script>
 </body>
 </html>
