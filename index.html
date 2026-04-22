@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keeperutstyr</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      padding: 32px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #f0f9ff;
+    }
+    .header { text-align: center; margin-bottom: 36px; }
+    .header-emoji { font-size: 2.8rem; margin-bottom: 4px; }
+    #lagNavn {
+      background: transparent; border: none;
+      border-bottom: 1px dashed rgba(255,255,255,0.3);
+      color: #f0f9ff; font-size: 1.6rem; font-weight: 800;
+      text-align: center; outline: none; cursor: pointer;
+      font-family: inherit; padding: 2px 4px;
+    }
+    #lagNavn:focus { border-bottom: 2px solid #60a5fa; }
+    .subtitle { color: #93c5fd; font-size: 0.9rem; margin-top: 6px; }
+    .section { width: 100%; max-width: 700px; margin-bottom: 36px; }
+    .section-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    }
+    .section-title {
+      color: #e2e8f0; font-size: 1.05rem; font-weight: 700;
+      letter-spacing: 0.03em; text-transform: uppercase;
+    }
+    .section-line { flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px; margin-bottom: 14px;
+    }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px; padding: 16px 18px; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .card:hover { background: rgba(255,255,255,0.08); }
+    .card.ledig   { border: 1px solid rgba(34,197,94,0.3); }
+    .card.utlånt  { border: 1px solid rgba(245,158,11,0.3); }
+    .card.mangler { border: 1px solid rgba(239,68,68,0.3); }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .card-name { font-weight: 800; font-size: 1rem; }
+    .badge {
+      display: inline-block; padding: 2px 10px; border-radius: 999px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em;
+    }
+    .badge.ledig   { color: #22c55e; background: #f0fdf4; border: 1px solid #bbf7d0; }
+    .badge.utlånt  { color: #f59e0b; background: #fffbeb; border: 1px solid #fde68a; }
+    .badge.mangler { color: #ef4444; background: #fef2f2; border: 1px solid #fecaca; }
+    .card-detail { color: #64748b; font-size: 0.8rem; margin-bottom: 3px; }
+    .card-detail span { color: #94a3b8; }
+    .card-detail.hos span { color: #bfdbfe; }
+    .card-detail.merknad { font-style: italic; }
+
+    .edit-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(96,165,250,0.5);
+      border-radius: 16px; padding: 18px 20px;
+    }
+    .edit-title { color: #bfdbfe; font-weight: 700; margin-bottom: 12px; }
+    .edit-label { color: #93c5fd; font-size: 0.78rem; display: block; margin-bottom: 3px; }
+    .edit-input {
+      width: 100%; background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px; color: #f0f9ff; padding: 6px 10px;
+      font-size: 0.9rem; margin-bottom: 10px; outline: none;
+      font-family: inherit;
+    }
+    .edit-input::placeholder { color: #475569; }
+    .status-buttons { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+    .status-btn {
+      padding: 4px 12px; border-radius: 999px; font-size: 0.75rem;
+      font-weight: 600; cursor: pointer; border: 1.5px solid rgba(255,255,255,0.15);
+      background: transparent; color: #94a3b8; font-family: inherit;
+      transition: all 0.1s;
+    }
+    .status-btn.active.ledig   { border-color: #22c55e; background: #f0fdf4; color: #22c55e; }
+    .status-btn.active.utlånt  { border-color: #f59e0b; background: #fffbeb; color: #f59e0b; }
+    .status-btn.active.mangler { border-color: #ef4444; background: #fef2f2; color: #ef4444; }
+    .edit-actions { display: flex; gap: 8px; }
+    .btn-save {
+      flex: 1; background: #3b82f6; color: #fff; border: none;
+      border-radius: 8px; padding: 7px 0; font-weight: 700;
+      cursor: pointer; font-size: 0.9rem; font-family: inherit;
+    }
+    .btn-cancel {
+      flex: 1; background: rgba(255,255,255,0.08); color: #94a3b8; border: none;
+      border-radius: 8px; padding: 7px 0; font-weight: 600;
+      cursor: pointer; font-size: 0.9rem; font-family: inherit;
+    }
+    .btn-add {
+      background: rgba(59,130,246,0.12); border: 1px dashed rgba(96,165,250,0.35);
+      color: #60a5fa; border-radius: 10px; padding: 8px 20px;
+      font-weight: 600; cursor: pointer; font-size: 0.85rem; font-family: inherit;
+    }
+    .spond-section { width: 100%; max-width: 700px; padding-bottom: 40px; }
+    .btn-spond {
+      width: 100%; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12); color: #cbd5e1;
+      border-radius: 10px; padding: 10px 20px; font-weight: 600;
+      cursor: pointer; font-size: 0.9rem; margin-bottom: 12px; font-family: inherit;
+    }
+    .spond-box {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 20px; display: none;
+    }
+    .spond-box.open { display: block; }
+    .spond-pre {
+      color: #cbd5e1; font-family: monospace; font-size: 0.85rem;
+      white-space: pre-wrap; line-height: 1.7;
+    }
+    .btn-copy {
+      margin-top: 14px; background: #3b82f6; color: #fff; border: none;
+      border-radius: 8px; padding: 8px 18px; font-weight: 700;
+      cursor: pointer; font-size: 0.85rem; font-family: inherit;
+      transition: background 0.2s;
+    }
+    .btn-copy.copied { background: #22c55e; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-emoji">🧤</div>
+  <input type="text" id="lagNavn" value="G2018" />
+  <p class="subtitle">Keeperutstyr — trykk på et element for å oppdatere</p>
+</div>
+
+<div class="section" id="sectionDrakter">
+  <div class="section-header">
+    <span>👕</span>
+    <span class="section-title">Drakter</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid" id="gridDrakter"></div>
+  <button class="btn-add" onclick="leggTil('drakter')">+ Legg til drakt</button>
+</div>
+
+<div class="section" id="sectionHansker">
+  <div class="section-header">
+    <span>🧤</span>
+    <span class="section-title">Hansker</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid" id="gridHansker"></div>
+  <button class="btn-add" onclick="leggTil('hansker')">+ Legg til hansker</button>
+</div>
+
+<div class="spond-section">
+  <button class="btn-spond" onclick="toggleSpond()">▼ Vis Spond-melding</button>
+  <div class="spond-box" id="spondBox">
+    <pre class="spond-pre" id="spondTekst"></pre>
+    <button class="btn-copy" id="btnKopier" onclick="kopier()">📋 Kopier til utklippstavle</button>
+  </div>
+</div>
+
+<script>
+  const data = {
+    drakter: [
+      { id: "d1", nr: "1", størrelse: "S", hvem: "", merknad: "", status: "ledig" },
+      { id: "d2", nr: "2", størrelse: "M", hvem: "", merknad: "", status: "ledig" },
+      { id: "d3", nr: "3", størrelse: "L", hvem: "", merknad: "", status: "ledig" },
+      { id: "d4", nr: "4", størrelse: "XL", hvem: "", merknad: "", status: "ledig" },
+    ],
+    hansker: [
+      { id: "h1", nr: "1", størrelse: "6", hvem: "", merknad: "", status: "ledig" },
+      { id: "h2", nr: "2", størrelse: "7", hvem: "", merknad: "", status: "ledig" },
+      { id: "h3", nr: "3", størrelse: "8", hvem: "", merknad: "", status: "ledig" },
+    ],
+  };
+
+  let editId = null;
+  let editType = null;
+  let draft = {};
+  let spondOpen = false;
+
+  const statusLabels = { ledig: "Ledig", "utlånt": "Utlånt", mangler: "Mangler / ukjent" };
+  const prefiks = { drakter: "Drakt", hansker: "Hansker" };
+  const størrelsePlaceholder = { drakter: "S / M / L / XL / 128 osv.", hansker: "5 / 6 / 7 / 8 / 9 osv." };
+
+  function render(type) {
+    const grid = document.getElementById("grid" + capitalize(type));
+    grid.innerHTML = "";
+    data[type].forEach(k => {
+      const div = document.createElement("div");
+      if (editId === k.id && editType === type) {
+        div.className = "edit-card";
+        div.innerHTML = `
+          <div class="edit-title">${prefiks[type]} ${k.nr}</div>
+          <label class="edit-label">Størrelse</label>
+          <input class="edit-input" id="inp-størrelse" value="${draft.størrelse}" placeholder="${størrelsePlaceholder[type]}" />
+          <label class="edit-label">Hvem har den?</label>
+          <input class="edit-input" id="inp-hvem" value="${draft.hvem}" placeholder="Navn / ingen" />
+          <label class="edit-label">Merknad</label>
+          <input class="edit-input" id="inp-merknad" value="${draft.merknad}" placeholder="F.eks. «vaske», «mangler»" />
+          <label class="edit-label">Status</label>
+          <div class="status-buttons">
+            <button class="status-btn ${draft.status === 'ledig' ? 'active ledig' : ''}" onclick="setStatus('ledig')">Ledig</button>
+            <button class="status-btn ${draft.status === 'utlånt' ? 'active utlånt' : ''}" onclick="setStatus('utlånt')">Utlånt</button>
+            <button class="status-btn ${draft.status === 'mangler' ? 'active mangler' : ''}" onclick="setStatus('mangler')">Mangler / ukjent</button>
+          </div>
+          <div class="edit-actions">
+            <button class="btn-save" onclick="lagre('${k.id}', '${type}')">Lagre</button>
+            <button class="btn-cancel" onclick="avbryt()">Avbryt</button>
+          </div>
+        `;
+      } else {
+        const st = k.status || (k.hvem ? "utlånt" : "ledig");
+        div.className = `card ${st}`;
+        div.innerHTML = `
+          <div class="card-top">
+            <span class="card-name">${prefiks[type]} ${k.nr}</span>
+            <span class="badge ${st}">${statusLabels[st]}</span>
+          </div>
+          <div class="card-detail">Størrelse: <span>${k.størrelse}</span></div>
+          ${k.hvem ? `<div class="card-detail hos">Hos: <span>${k.hvem}</span></div>` : ""}
+          ${k.merknad ? `<div class="card-detail merknad">${k.merknad}</div>` : ""}
+        `;
+        div.onclick = () => startEdit(k, type);
+      }
+      grid.appendChild(div);
+    });
+  }
+
+  function startEdit(k, type) {
+    editId = k.id;
+    editType = type;
+    draft = { størrelse: k.størrelse, hvem: k.hvem, merknad: k.merknad, status: k.status || (k.hvem ? "utlånt" : "ledig") };
+    render(type);
+    // sync inputs live
+    setTimeout(() => {
+      ["størrelse","hvem","merknad"].forEach(f => {
+        const el = document.getElementById("inp-" + f);
+        if (el) el.addEventListener("input", e => { draft[f] = e.target.value; });
+      });
+    }, 0);
+  }
+
+  function setStatus(s) {
+    draft.status = s;
+    render(editType);
+    setTimeout(() => {
+      ["størrelse","hvem","merknad"].forEach(f => {
+        const el = document.getElementById("inp-" + f);
+        if (el) {
+          el.addEventListener("input", e => { draft[f] = e.target.value; });
+        }
+      });
+    }, 0);
+  }
+
+  function lagre(id, type) {
+    // grab latest input values before saving
+    ["størrelse","hvem","merknad"].forEach(f => {
+      const el = document.getElementById("inp-" + f);
+      if (el) draft[f] = el.value;
+    });
+    const item = data[type].find(k => k.id === id);
+    Object.assign(item, draft);
+    editId = null; editType = null;
+    render(type);
+    oppdaterSpond();
+  }
+
+  function avbryt() {
+    const t = editType;
+    editId = null; editType = null;
+    render(t);
+  }
+
+  function leggTil(type) {
+    const nums = data[type].map(k => parseInt(k.nr)).filter(Boolean);
+    const nextNr = String(nums.length ? Math.max(...nums) + 1 : 1);
+    const newId = type[0] + Date.now();
+    const newK = { id: newId, nr: nextNr, størrelse: "", hvem: "", merknad: "", status: "ledig" };
+    data[type].push(newK);
+    startEdit(newK, type);
+  }
+
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function lagLinjer(items, pref) {
+    return items.map(k => {
+      const st = k.status || (k.hvem ? "utlånt" : "ledig");
+      const emoji = st === "ledig" ? "🟢" : st === "utlånt" ? "🟡" : "🔴";
+      const hvemStr = k.hvem ? ` — ${k.hvem}` : "";
+      const mStr = k.merknad ? ` (${k.merknad})` : "";
+      return `${emoji} ${pref} ${k.nr} (str. ${k.størrelse})${hvemStr}${mStr} — ${statusLabels[st]}`;
+    }).join("\n");
+  }
+
+  function getSpondTekst() {
+    const lag = document.getElementById("lagNavn").value;
+    return `🧤 Keeperutstyr – ${lag}\n\n👕 Drakter\n${lagLinjer(data.drakter,"Drakt")}\n\n🧤 Hansker\n${lagLinjer(data.hansker,"Hansker")}\n\nKontakt trenerne hvis du har utstyr hjemme eller trenger å låne.`;
+  }
+
+  function oppdaterSpond() {
+    document.getElementById("spondTekst").textContent = getSpondTekst();
+  }
+
+  function toggleSpond() {
+    spondOpen = !spondOpen;
+    document.getElementById("spondBox").className = "spond-box" + (spondOpen ? " open" : "");
+    document.querySelector(".btn-spond").textContent = spondOpen ? "▲ Skjul Spond-melding" : "▼ Vis Spond-melding";
+    oppdaterSpond();
+  }
+
+  function kopier() {
+    navigator.clipboard.writeText(getSpondTekst()).then(() => {
+      const btn = document.getElementById("btnKopier");
+      btn.textContent = "✓ Kopiert!";
+      btn.className = "btn-copy copied";
+      setTimeout(() => { btn.textContent = "📋 Kopier til utklippstavle"; btn.className = "btn-copy"; }, 2000);
+    });
+  }
+
+  render("drakter");
+  render("hansker");
+</script>
+</body>
+</html>
