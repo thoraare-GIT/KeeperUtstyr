@@ -209,7 +209,9 @@
       if (editId === k.id && editType === type) {
         div.className = "edit-card";
         div.innerHTML = `
-          <div class="edit-title">${prefiks[type]} ${k.nr}</div>
+          <div class="edit-title">${prefiks[type]}</div>
+          <label class="edit-label">Nummer</label>
+          <input class="edit-input" id="inp-nr" value="${draft.nr || ""}" placeholder="F.eks. 1, 2, 3..." />
           <label class="edit-label">Størrelse</label>
           <input class="edit-input" id="inp-størrelse" value="${draft.størrelse || ""}" placeholder="${størrelsePlaceholder[type]}" />
           <label class="edit-label">Hvem har den?</label>
