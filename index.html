@@ -229,7 +229,7 @@
           <div class="saving-indicator" id="savingIndicator"></div>
         `;
         setTimeout(() => {
-          ["størrelse","hvem","merknad"].forEach(f => {
+          ["nr","størrelse","hvem","merknad"].forEach(f => {
             const el = document.getElementById("inp-" + f);
             if (el) el.addEventListener("input", e => { draft[f] = e.target.value; });
           });
@@ -254,7 +254,7 @@
   function startEdit(k, type) {
     editId = k.id;
     editType = type;
-    draft = { størrelse: k.størrelse || "", hvem: k.hvem || "", merknad: k.merknad || "", status: k.status || "ledig" };
+    draft = { nr: k.nr || "", størrelse: k.størrelse || "", hvem: k.hvem || "", merknad: k.merknad || "", status: k.status || "ledig" };
     render(type);
   }
 
@@ -265,7 +265,7 @@
   }
 
   async function lagre(id, type) {
-    ["størrelse","hvem","merknad"].forEach(f => {
+    ["nr","størrelse","hvem","merknad"].forEach(f => {
       const el = document.getElementById("inp-" + f);
       if (el) draft[f] = el.value;
     });
@@ -278,10 +278,9 @@
     try {
       const isNew = typeof id === "string" && id.startsWith("ny_");
       if (isNew) {
-        const maxNr = Math.max(0, ...data[type].map(k => k.nr || 0));
         const row = await apiFetch("utstyr", {
           method: "POST",
-          body: JSON.stringify([{ type, nr: maxNr + 1, ...draft }])
+          body: JSON.stringify([{ type, ...draft }])
         });
         data[type] = data[type].filter(k => k.id !== id);
         if (row && row[0]) data[type].push(row[0]);
@@ -313,8 +312,7 @@
 
   function leggTil(type) {
     const tempId = "ny_" + Date.now();
-    const maxNr = Math.max(0, ...data[type].map(k => k.nr || 0));
-    const newK = { id: tempId, type, nr: maxNr + 1, størrelse: "", hvem: "", merknad: "", status: "ledig" };
+    const newK = { id: tempId, type, nr: "", størrelse: "", hvem: "", merknad: "", status: "ledig" };
     data[type].push(newK);
     startEdit(newK, type);
   }
