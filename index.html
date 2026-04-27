@@ -269,7 +269,7 @@
   async function lagre(id, type) {
     ["nr","størrelse","hvem","merknad"].forEach(f => {
       const el = document.getElementById("inp-" + f);
-      if (el) draft[f] = el.value;
+      if (el) draft[f] = f === "nr" ? (el.value === "" ? null : parseInt(el.value)) : el.value;
     });
 
     const btn = document.getElementById("btnLagre");
