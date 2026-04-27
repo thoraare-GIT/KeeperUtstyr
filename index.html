@@ -188,13 +188,13 @@
 
   async function seedData() {
     const defaults = [
-      { type: "drakt", nr: 1, størrelse: "S", hvem: "", merknad: "", status: "ledig" },
-      { type: "drakt", nr: 2, størrelse: "M", hvem: "", merknad: "", status: "ledig" },
-      { type: "drakt", nr: 3, størrelse: "L", hvem: "", merknad: "", status: "ledig" },
-      { type: "drakt", nr: 4, størrelse: "XL", hvem: "", merknad: "", status: "ledig" },
-      { type: "hansker", nr: 1, størrelse: "6", hvem: "", merknad: "", status: "ledig" },
-      { type: "hansker", nr: 2, størrelse: "7", hvem: "", merknad: "", status: "ledig" },
-      { type: "hansker", nr: 3, størrelse: "8", hvem: "", merknad: "", status: "ledig" },
+      { type: "drakt", nr: null, størrelse: "S", hvem: "", merknad: "", status: "ledig" },
+      { type: "drakt", nr: null, størrelse: "M", hvem: "", merknad: "", status: "ledig" },
+      { type: "drakt", nr: null, størrelse: "L", hvem: "", merknad: "", status: "ledig" },
+      { type: "drakt", nr: null, størrelse: "XL", hvem: "", merknad: "", status: "ledig" },
+      { type: "hansker", nr: null, størrelse: "6", hvem: "", merknad: "", status: "ledig" },
+      { type: "hansker", nr: null, størrelse: "7", hvem: "", merknad: "", status: "ledig" },
+      { type: "hansker", nr: null, størrelse: "8", hvem: "", merknad: "", status: "ledig" },
     ];
     await apiFetch("utstyr", { method: "POST", body: JSON.stringify(defaults) });
   }
